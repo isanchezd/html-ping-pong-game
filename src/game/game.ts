@@ -14,7 +14,11 @@ import {
     Y_BALL, 
     COLOR_BALL, 
     CANVAS_WIDTH, 
-    CANVAS_HEIGHT 
+    CANVAS_HEIGHT,
+    UP_J1,
+    DOWN_J1,
+    UP_J2,
+    DOWN_J2
 } from './constants';
 
 
@@ -35,11 +39,11 @@ export default class HTMLPingPongGame {
 
     public run(): void {
         console.log(`${this._sessionId} assigned to the game`);
+        this._player1 = new Player(X_J1, Y_J1, COLOR_J1, UP_J1, DOWN_J1);            
+        this._player2 = new Player(X_J2, Y_J2, COLOR_J2, UP_J2, DOWN_J2);
+        this._ball = new Ball(X_BALL, Y_BALL, COLOR_BALL);
         setInterval(() => {
             CanvasCleanerService.clean(this._canvas);
-            this._player1 = new Player(X_J1, Y_J1, COLOR_J1);            
-            this._player2 = new Player(X_J2, Y_J2, COLOR_J2);
-            this._ball = new Ball(X_BALL, Y_BALL, COLOR_BALL);
             this._player1.render();
             this._player2.render();
             this._ball.render();

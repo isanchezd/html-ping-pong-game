@@ -1,5 +1,5 @@
-export const CANVAS_WIDTH = window.innerWidth;
-export const CANVAS_HEIGHT = window.innerHeight;
+export const CANVAS_WIDTH = 1000;
+export const CANVAS_HEIGHT = 600;
 export const FPS: number = 60;
 export const COLOR_BALL: string = '#000';
 export const PLAYER_WIDTH: number = 100;
@@ -14,3 +14,9 @@ export const COLOR_J1: string = '#FF2D00';
 export const COLOR_J2: string = '#0049FF';
 export const X_BALL: number = ((CANVAS_WIDTH * 50) / 100);
 export const Y_BALL: number = (CANVAS_HEIGHT / 2);
+export const UP_J1: number = 81;
+export const DOWN_J1: number = 65;
+export const UP_J2: number = 80;  
+export const MOVE_BALL: number = 32;
+export const DOWN_J2: number = 186;  
+export const GAME_SPEED: number = 20;
