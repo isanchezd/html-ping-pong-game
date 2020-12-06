@@ -1,8 +1,8 @@
-import HTMLPingPongGame  from './game/game';
+import { Game } from './game/game';
 
 
-window.addEventListener('load', (event) => {
+window.addEventListener('load', () => {
     const canvas = <HTMLCanvasElement>document.getElementById('main');
-    const game = new HTMLPingPongGame(canvas);
+    const game = new Game(canvas);
     game.run();
 });
