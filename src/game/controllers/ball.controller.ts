@@ -1,29 +1,25 @@
-import { GAME_SPEED, MOVED_BALL_EVENT_NAME, START_GAME_EVENT_NAME } from "../constants";
+import { BALL_HEIGHT, BALL_SPEED, START_GAME_EVENT_NAME } from "../constants";
 import { Controller } from "../class/abstracts/controller";
-import { GameItem } from "../class/game-item";
+import { Ball } from "../class/entities/ball";
 
 export class BallController extends Controller {
-  private _ball: GameItem;
-  private _isFirstMove: boolean;
+  public xSpeed: number = BALL_SPEED;
+  public ySpeed: number = BALL_SPEED;
+  private _ball: Ball;
 
-  constructor(item: GameItem) {
+  public get ball(): Ball {
+    return this._ball;
+  }
+
+  constructor(ball: Ball) {
     super();
-    this._isFirstMove = true;
-    this._ball = item;
+    this._ball = ball;
     document.addEventListener(START_GAME_EVENT_NAME, () => this.move());
   }
 
   public move() {
-    if (this._isFirstMove) {
-      this._firstMove();
-    }
-
-    this._isFirstMove = false;
-    this.emitEvent(MOVED_BALL_EVENT_NAME, { detail: this._ball });
+    this._ball.x += this.xSpeed;
+    this._ball.y += this.ySpeed;
   }
-
-  private _firstMove() {
-    Math.random() / 2 === 0 ? this._ball.x += GAME_SPEED : this._ball.x -= GAME_SPEED;
-  } 
 
 }

@@ -4,7 +4,9 @@ export const CANVAS_HEIGHT = 600;
 
 // Rendering game settings
 export const FPS: number = 60;
-export const GAME_SPEED: number = 20;
+export const BALL_SPEED: number = 1;
+export const PLAYER_SPEED: number = 10;
+
 
 //Game items  Size
 export const PLAYER_WIDTH: number = 100;
@@ -15,9 +17,8 @@ export const RADIUS_BALL: number = 20;
 
 //Game Items coordinates
 export const X_J1: number = ((CANVAS_WIDTH * 5) / 100);
-export const Y_J1: number = (CANVAS_HEIGHT  / 2) - (PLAYER_HEIGHT / 2);
 export const X_J2: number = ((CANVAS_WIDTH * 85) / 100);
-export const Y_J2: number = (CANVAS_HEIGHT / 2 ) - (PLAYER_HEIGHT / 2);
+export const Y_PLAYER: number = (CANVAS_HEIGHT / 2 ) - (PLAYER_HEIGHT / 2);
 export const X_BALL: number = ((CANVAS_WIDTH * 50) / 100);
 export const Y_BALL: number = (CANVAS_HEIGHT / 2);
 
