@@ -1,20 +1,18 @@
-import { CANVAS_HEIGHT, MOVE_PLAYER_EVENT_NAME, PLAYER_HEIGHT, PLAYER_SPEED } from "../constants";
-import { Controller } from "../class/abstracts/controller";
+import { CANVAS_HEIGHT, PLAYER_HEIGHT, PLAYER_SPEED } from "../constants";
 import { GameItem } from "../class/abstracts/game-item";
-import { EventEmitter } from "../interfaces/event-emitter.interface";
+import { Player } from "../class/entities/player";
 
-export class PlayerController extends Controller implements EventEmitter {
+export class PlayerController {
   private _keyCodeLeft: number;
   private _keyCodeRight: number;
-  private _player: GameItem;
+  private _player: Player;
 
-  public get player(): GameItem {
+  public get player(): Player {
     return this._player;
   }
 
-  constructor(item: GameItem, keyCodeLeft: number, keyCodeRight: number) {
-    super();
-    this._player = item;
+  constructor(player: Player, keyCodeLeft: number, keyCodeRight: number) {
+    this._player = player;
     this._keyCodeLeft = keyCodeLeft;
     this._keyCodeRight = keyCodeRight;
     document.addEventListener('keyup', (event: KeyboardEvent) => this._keyUpEventHandle(event));
@@ -32,7 +30,6 @@ export class PlayerController extends Controller implements EventEmitter {
       default:
         break;
     }
-    this.emitEvent(MOVE_PLAYER_EVENT_NAME, { detail: this._player });
   }
 
   private _moveLeft() {

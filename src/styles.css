@@ -5,7 +5,28 @@
     margin: 0;
 }
 
-canvas {
-    border: 1px solid #000;
+
+.main-container {
+  display:flex; 
+  flex-direction: column;
+}
+
+.border {
+  border: 1px solid #000;
+}
+
+.counter {
+  display:flex;
+  justify-content: space-around;
+}
+
+.counter-item {
+  font-size: 5rem;
+}
+
+.board-game {
+    margin-top: 20px;
+    display: flex;
+    justify-content: center;
 }
 
