@@ -1,7 +1,8 @@
 import { Ball } from "../class/entities/ball";
-import { Counter } from "../class/entities/counter";
 import { Player } from "../class/entities/player";
-import { CANVAS_HEIGHT, CANVAS_WIDTH, COLOR_BALL, COLOR_J1, COLOR_J2, FPS, KEY_CODE_DOWN_J1, KEY_CODE_DOWN_J2, KEY_CODE_UP_J1, KEY_CODE_UP_J2, PLAYER_HEIGHT, PLAYER_WIDTH, X_BALL, X_J1, X_J2, Y_BALL, Y_PLAYER } from "../constants";
+import { FPS } from "../constants";
+import { BallColissionHandler } from "../handlers/ball-colission.handler";
+import { ScoreHandler } from "../handlers/score-handler";
 import { CanvasCleanerHelper } from "../helpers/canvas-cleaner.helper";
 import { BallRender } from "../renders/ball.render";
 import { PlayerRender } from "../renders/player.render";
@@ -20,15 +21,24 @@ export class GameController {
   private _ballRender: BallRender;
   private _intervalRef: number;
 
-  constructor(canvas: HTMLCanvasElement) {
+  constructor(
+    canvas: HTMLCanvasElement,
+    player1Controller: PlayerController,
+    player2Controller: PlayerController,
+    ballController: BallController,
+    counterJ1Controller: CounterController,
+    counterJ2Controller: CounterController,
+    playerRender: PlayerRender,
+    ballRender: BallRender
+  ) {
     this._canvas = canvas;
-    this._player1Controller = new PlayerController(new Player('J1', X_J1, Y_PLAYER, COLOR_J1), KEY_CODE_UP_J1, KEY_CODE_DOWN_J1);
-    this._player2Controller = new PlayerController(new Player('J2', X_J2, Y_PLAYER, COLOR_J2), KEY_CODE_UP_J2, KEY_CODE_DOWN_J2);
-    this._ballController = new BallController(new Ball(X_BALL, Y_BALL, COLOR_BALL));
-    this._counterJ1Controller = new CounterController(document.getElementById('counter-J1'));
-    this._counterJ2Controller = new CounterController(document.getElementById('counter-J2'));
-    this._playerRender = new PlayerRender();
-    this._ballRender = new BallRender();
+    this._player1Controller = player1Controller;
+    this._player2Controller = player2Controller;
+    this._ballController = ballController;
+    this._counterJ1Controller = counterJ1Controller;
+    this._counterJ2Controller = counterJ2Controller;
+    this._playerRender = playerRender;
+    this._ballRender = ballRender;
   }
 
   public start(): void {
@@ -63,67 +73,8 @@ export class GameController {
       y: ball.y
     });
     this._ballController.move();
-    this._ballColissionsHandle();
-    this._scoreHandle();
-  }
-
-  private _ballColissionsHandle(): void {
-
-    // right
-    if (this._ballController.ball.x + this._ballController.ball.radius >= CANVAS_WIDTH) {
-      this._ballController.ball.x = CANVAS_WIDTH - this._ballController.ball.radius;
-      this._ballController.xSpeed = -this._ballController.xSpeed;
-    }
-
-    // left
-    if (this._ballController.ball.x - this._ballController.ball.radius <= 0) {
-      this._ballController.ball.x = this._ballController.ball.radius;
-      this._ballController.xSpeed = -this._ballController.xSpeed;
-    }
-
-    // down
-    if (this._ballController.ball.y + this._ballController.ball.radius >= CANVAS_HEIGHT) {
-      this._ballController.ball.y = CANVAS_HEIGHT - this._ballController.ball.radius;
-      this._ballController.ySpeed = -this._ballController.ySpeed;
-    }
-
-    // up
-    if (this._ballController.ball.y - this._ballController.ball.radius <= 0) {
-      this._ballController.ball.y = this._ballController.ball.radius;
-      this._ballController.ySpeed = -this._ballController.ySpeed;
-    }
-
-    // Pala izquierda
-    if (
-      (this._ballController.ball.x - this._ballController.ball.radius) <= (this._player1Controller.player.x + PLAYER_WIDTH) &&
-      (this._ballController.ball.y - this._ballController.ball.radius) >= (this._player1Controller.player.y) &&
-      (this._ballController.ball.y + this._ballController.ball.radius) <= (this._player1Controller.player.y + (PLAYER_HEIGHT))
-    ) {
-      this._ballController.xSpeed = -this._ballController.xSpeed;
-    }
-
-    // Pala derecha
-    if (
-      (this._ballController.ball.x + this._ballController.ball.radius) >= (this._player2Controller.player.x) &&
-      (this._ballController.ball.y - this._ballController.ball.radius) >= (this._player2Controller.player.y) &&
-      (this._ballController.ball.y + this._ballController.ball.radius) <= (this._player2Controller.player.y + (PLAYER_HEIGHT))
-    ) {
-      this._ballController.xSpeed = -this._ballController.xSpeed;
-    }
-  }
-
-
-  private _scoreHandle(): void {
-    if (this._ballController.ball.x <= PLAYER_WIDTH) {
-      this._counterJ2Controller.updateCounter();
-      this._ballController.reset();
-    }
-
-    if (this._ballController.ball.x >= (CANVAS_WIDTH - PLAYER_WIDTH)) {
-      this._counterJ1Controller.updateCounter();
-      this._ballController.reset();
-    }
-
+    BallColissionHandler.handle(this._ballController, this._player1Controller, this._player2Controller);
+    ScoreHandler.handle(this._ballController, this._counterJ1Controller, this._counterJ2Controller);
   }
 
 }

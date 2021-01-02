@@ -1,8 +1,8 @@
+import { Render } from "../class/abstracts/render";
 import { RADIUS_BALL } from "../constants";
 import { RenderContext } from "../interfaces/render-context.interface";
-import { Render } from "../interfaces/render.inteface";
-
-export class BallRender implements Render {
+Render
+export class BallRender extends Render {
 
     public render(context: RenderContext): void {
         context.ctx.beginPath();

@@ -1,6 +1,7 @@
+import { Render } from "../class/abstracts/render";
 import { PLAYER_HEIGHT, PLAYER_WIDTH } from "../constants";
 import { RenderContext } from "../interfaces/render-context.interface";
-import { Render } from "../interfaces/render.inteface";
+Render
 
 export class PlayerRender implements Render {
 
