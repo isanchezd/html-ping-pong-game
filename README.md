@@ -10,7 +10,7 @@ You need a node.js environment (with the last LTS it´s Ok)
 
 Clone the repository in your local environment and execute:
 
-    $ npm run install
+    $ npm install
 
 ## Running the project
 
